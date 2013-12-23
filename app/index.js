@@ -67,16 +67,34 @@ MeanMinimalGenerator.prototype.packageJSON = function packageJSON() {
 };
 
 MeanMinimalGenerator.prototype.app = function app() {
-  this.mkdir('app');  
-  this.mkdir('config');
-  this.mkdir('public');
-  
-  this.template('_gruntFile.js', 'gruntFile.js');
-  this.template('index.html', 'index.html');
-
-  this.template('_bower.json', 'bower.json');
   this.template('_config.json', 'config.json');
   this.template('_package.json', 'package.json');
+
+  this.mkdir('app');
+  this.mkdir('app/controllers');
+  this.mkdir('app/models');
+  this.mkdir('app/views');
+  this.mkdir('app/views/includes');
+  this.mkdir('app/views/layouts');
+
+  this.copy('app/controllers/index.js');
+
+  this.copy('app/views/includes/foot.jade');
+  this.copy('app/views/includes/head.jade');
+
+  this.copy('app/views/layouts/default.jade');
+
+  this.copy('app/views/404.jade');
+  this.copy('app/views/500.jade');
+  this.copy('app/views/index.jade');
+
+  this.mkdir('public/styles');
+
+  if (this.compassBootstrap) {
+    this.copy('app/styles/app.scss');
+  } else {
+    this.copy('public/styles/app.css');
+  }
 };
 
 MeanMinimalGenerator.prototype.configSetup = function configSetup() {
